@@ -19,6 +19,8 @@ public class login extends javax.swing.JFrame {
         initComponents();
         
         getContentPane().setBackground(new java.awt.Color(243, 243, 224));
+        setLocationRelativeTo(null); // Center the form on the screen
+        setResizable(false); // Prevent resizing
     }
 
     /**
@@ -67,6 +69,12 @@ public class login extends javax.swing.JFrame {
         JPasswordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JPasswordFieldActionPerformed(evt);
+            }
+        });
+
+        JPasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt); // Trigger login button on Enter
             }
         });
 
@@ -135,6 +143,8 @@ public class login extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null); // Center the form on the screen
+        setResizable(true); // Allow resizing
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed

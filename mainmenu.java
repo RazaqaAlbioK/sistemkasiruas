@@ -6,6 +6,8 @@ package sistemkasiruas;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * Main menu class for the minimarket cashier program.
@@ -21,6 +23,12 @@ public class mainmenu extends javax.swing.JFrame {
     private javax.swing.JLabel totalLabel;
     private javax.swing.JLabel paymentMethodLabel;
     private javax.swing.JScrollPane orderScrollPane;
+    private javax.swing.JLabel itemIdErrorLabel;
+    private javax.swing.JLabel itemQtyErrorLabel;
+    private javax.swing.JLabel itemIdLabel;
+    private javax.swing.JLabel itemQtyLabel;
+    private javax.swing.JButton deleteItemButton;
+private javax.swing.JButton updateItemButton;
  
     /**
      * Creates new form mainmenu
@@ -28,6 +36,7 @@ public class mainmenu extends javax.swing.JFrame {
     public mainmenu() {
         initComponents();
         getContentPane().setBackground(new java.awt.Color(243, 243, 224));
+        checkoutButton.setEnabled(false); // Disable checkout button initially
     }
 
     /**
@@ -65,6 +74,8 @@ public class mainmenu extends javax.swing.JFrame {
         exitButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        
+
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(96, 139, 193));
@@ -92,6 +103,12 @@ public class mainmenu extends javax.swing.JFrame {
         paymentMethodLabel = new javax.swing.JLabel();
         paymentMethodComboBox = new javax.swing.JComboBox<>();
         checkoutButton = new javax.swing.JButton();
+        itemIdErrorLabel = new javax.swing.JLabel();
+        itemQtyErrorLabel = new javax.swing.JLabel();
+        itemIdLabel = new javax.swing.JLabel();
+        itemQtyLabel = new javax.swing.JLabel();
+        deleteItemButton = new javax.swing.JButton();
+        updateItemButton = new javax.swing.JButton();
 
         itemIdField.setText("Item ID");
         itemQtyField.setText("Quantity");
@@ -104,9 +121,11 @@ public class mainmenu extends javax.swing.JFrame {
         });
 
         orderTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
-            new String [] {"Item ID", "Item Name", "Price", "Quantity", "Total"}
-        ));
+    new Object [][] {},
+    new String [] {"Item ID", "Item Name", "Price", "Quantity", "Total"}
+    ));
+    orderTable.getTableHeader().setReorderingAllowed(false); // Disable column reordering
+    orderScrollPane.setViewportView(orderTable);
         orderScrollPane.setViewportView(orderTable);
 
         totalLabel.setText("Total:");
@@ -122,55 +141,77 @@ public class mainmenu extends javax.swing.JFrame {
             }
         });
 
+        itemIdErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
+        itemQtyErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
+
+        itemIdLabel.setText("Item ID:");
+        itemQtyLabel.setText("Quantity:");
+
+        
+
         javax.swing.GroupLayout cashierPanelLayout = new javax.swing.GroupLayout(cashierPanel);
-        cashierPanel.setLayout(cashierPanelLayout);
-        cashierPanelLayout.setHorizontalGroup(
-            cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+cashierPanel.setLayout(cashierPanelLayout);
+cashierPanelLayout.setHorizontalGroup(
+    cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(cashierPanelLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(orderScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
             .addGroup(cashierPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(orderScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
-                    .addGroup(cashierPanelLayout.createSequentialGroup()
-                        .addComponent(itemIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(itemQtyField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addItemButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cashierPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(totalLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(totalField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cashierPanelLayout.createSequentialGroup()
-                        .addComponent(paymentMethodLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(paymentMethodComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(checkoutButton)))
-                .addContainerGap())
-        );
-        cashierPanelLayout.setVerticalGroup(
-            cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cashierPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(itemIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemQtyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addItemButton))
+                    .addComponent(itemIdLabel)
+                    .addComponent(itemIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(itemIdErrorLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(orderScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(itemQtyLabel)
+                    .addComponent(itemQtyField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(itemQtyErrorLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(totalLabel)
-                    .addComponent(totalField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(addItemButton)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cashierPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(totalLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(paymentMethodLabel)
-                    .addComponent(paymentMethodComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(checkoutButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                .addComponent(totalField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cashierPanelLayout.createSequentialGroup()
+                .addComponent(paymentMethodLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(paymentMethodComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(checkoutButton)))
+        .addContainerGap())
+);
+cashierPanelLayout.setVerticalGroup(
+    cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(cashierPanelLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(itemIdLabel)
+            .addComponent(itemQtyLabel))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(itemIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(itemQtyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(addItemButton))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(itemIdErrorLabel)
+            .addComponent(itemQtyErrorLabel))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(orderScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(totalLabel)
+            .addComponent(totalField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(paymentMethodLabel)
+            .addComponent(paymentMethodComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(checkoutButton))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+);
 
         parentPanel.add(cashierPanel, "card4");
 
@@ -183,7 +224,7 @@ public class mainmenu extends javax.swing.JFrame {
         addButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here
+                addButtonActionPerformed(evt);
             }
         });
 
@@ -194,7 +235,7 @@ public class mainmenu extends javax.swing.JFrame {
         updateButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here
+                updateButtonActionPerformed(evt);
             }
         });
 
@@ -205,7 +246,7 @@ public class mainmenu extends javax.swing.JFrame {
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here
+                deleteButtonActionPerformed(evt);
             }
         });
 
@@ -214,49 +255,16 @@ public class mainmenu extends javax.swing.JFrame {
         jLabel3.setText("Stock");
 
         stockTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Name", "ID", "Price", "QTY"
-            }
+            new Object [][] {},
+            new String [] {"Name", "ID", "Price", "QTY"}
         ));
+        stockTable.getTableHeader().setReorderingAllowed(false); // Disable column reordering
         stockTable.setShowGrid(true);
         jScrollPane1.setViewportView(stockTable);
 
-        idField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here
-            }
-        });
-
-        nameField.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here
-            }
-        });
-
         jLabel1.setText("Item Name");
-
         jLabel6.setText("ID");
-
         jLabel7.setText("Price");
-
-        priceField.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here
-            }
-        });
-
-        qtyField.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO add your handling code here
-            }
-        });
-
         jLabel8.setText("QTY");
 
         javax.swing.GroupLayout stockPanelLayout = new javax.swing.GroupLayout(stockPanel);
@@ -324,11 +332,11 @@ public class mainmenu extends javax.swing.JFrame {
                 .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(updateButton)
-                    .addComponent(deleteButton))
+                    .addComponent(deleteButton)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
-        );
+        ));
 
         parentPanel.add(stockPanel, "card3");
 
@@ -512,18 +520,120 @@ public class mainmenu extends javax.swing.JFrame {
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = stockTable.getSelectedRow();
+        if (selectedRow != -1) {
+            DefaultTableModel stockModel = (DefaultTableModel) stockTable.getModel();
+            stockModel.removeRow(selectedRow);
+
+            clearStockFields();
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete.");
+        }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        
-        DefaultTableModel model = (DefaultTableModel)stockTable.getModel();
-        model.addRow(new Object[]{nameField.getText(), idField.getText(), priceField.getText(), qtyField.getText()});
-    }//GEN-LAST:event_addButtonActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    String name = nameField.getText();
+    String id = idField.getText();
+    String priceText = priceField.getText();
+    String qtyText = qtyField.getText();
 
-    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_updateButtonActionPerformed
+    // Validate that all fields are filled
+    if (name.isEmpty() || id.isEmpty() || priceText.isEmpty() || qtyText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "All fields must be filled.");
+        return;
+    }
+
+    // Validate ID
+    int idNumber;
+    try {
+        idNumber = Integer.parseInt(id);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "ID must be a whole number.");
+        return;
+    }
+
+    // Validate price
+    int price;
+    try {
+        price = Integer.parseInt(priceText);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Price must be a whole number.");
+        return;
+    }
+
+    // Validate quantity
+    int qty;
+    try {
+        qty = Integer.parseInt(qtyText);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Quantity must be a whole number.");
+        return;
+    }
+
+    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+    String formattedPrice = currencyFormat.format(price);
+
+    DefaultTableModel stockModel = (DefaultTableModel) stockTable.getModel();
+    stockModel.addRow(new Object[]{name, id, formattedPrice, qty});
+
+    clearStockFields();
+}
+
+private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    int selectedRow = stockTable.getSelectedRow();
+    if (selectedRow != -1) {
+        String name = nameField.getText();
+        String id = idField.getText();
+        String priceText = priceField.getText();
+        String qtyText = qtyField.getText();
+
+        // Validate that all fields are filled
+        if (name.isEmpty() || id.isEmpty() || priceText.isEmpty() || qtyText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields must be filled.");
+            return;
+        }
+
+        // Validate ID
+        int idNumber;
+        try {
+            idNumber = Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID must be a whole number.");
+            return;
+        }
+
+        // Validate price
+        int price;
+        try {
+            price = Integer.parseInt(priceText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Price must be a whole number.");
+            return;
+        }
+
+        // Validate quantity
+        int qty;
+        try {
+            qty = Integer.parseInt(qtyText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Quantity must be a whole number.");
+            return;
+        }
+
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        String formattedPrice = currencyFormat.format(price);
+
+        DefaultTableModel stockModel = (DefaultTableModel) stockTable.getModel();
+        stockModel.setValueAt(name, selectedRow, 0);
+        stockModel.setValueAt(id, selectedRow, 1);
+        stockModel.setValueAt(formattedPrice, selectedRow, 2);
+        stockModel.setValueAt(qty, selectedRow, 3);
+
+        clearStockFields();
+    } else {
+        JOptionPane.showMessageDialog(this, "Select a row to update.");
+    }
+}
 
     private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
         // TODO add your handling code here:
@@ -537,83 +647,136 @@ public class mainmenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_priceFieldActionPerformed
 
-    private void qtyFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qtyFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_qtyFieldActionPerformed
-
     private void addItemButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        String itemId = itemIdField.getText();
-        int quantity = Integer.parseInt(itemQtyField.getText());
+    String itemId = itemIdField.getText();
+    String quantityText = itemQtyField.getText();
 
-        // Find item in stockTable
-        DefaultTableModel stockModel = (DefaultTableModel) stockTable.getModel();
-        DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
-        boolean itemFound = false;
+    // Clear previous error messages
+    itemIdErrorLabel.setText("");
+    itemQtyErrorLabel.setText("");
 
-        for (int i = 0; i < stockModel.getRowCount(); i++) {
-            if (stockModel.getValueAt(i, 1).equals(itemId)) {
-                String itemName = (String) stockModel.getValueAt(i, 0);
-                double price = Double.parseDouble((String) stockModel.getValueAt(i, 2));
-                int stockQty = Integer.parseInt((String) stockModel.getValueAt(i, 3));
+    // Validate input fields
+    if (itemId.isEmpty()) {
+        itemIdErrorLabel.setText("Insert item information");
+        return;
+    }
+    if (quantityText.isEmpty()) {
+        itemQtyErrorLabel.setText("Insert item information");
+        return;
+    }
 
-                if (quantity <= stockQty) {
-                    double total = price * quantity;
-                    orderModel.addRow(new Object[]{itemId, itemName, price, quantity, total});
-                    itemFound = true;
-                    break;
-                } else {
-                    JOptionPane.showMessageDialog(this, "Insufficient stock for item: " + itemName);
-                    return;
+    int quantity;
+    try {
+        quantity = Integer.parseInt(quantityText);
+    } catch (NumberFormatException e) {
+        itemQtyErrorLabel.setText("Invalid quantity");
+        return;
+    }
+
+    // Find item in stockTable
+    DefaultTableModel stockModel = (DefaultTableModel) stockTable.getModel();
+    DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
+    boolean itemFound = false;
+
+    for (int i = 0; i < stockModel.getRowCount(); i++) {
+        if (stockModel.getValueAt(i, 1).equals(itemId)) {
+            String itemName = (String) stockModel.getValueAt(i, 0);
+            double price = Double.parseDouble(stockModel.getValueAt(i, 2).toString().replaceAll("[^\\d.]", ""));
+            int stockQty = Integer.parseInt(stockModel.getValueAt(i, 3).toString());
+
+            if (quantity <= stockQty) {
+                // Check if the item already exists in the cart
+                boolean itemInCart = false;
+                for (int j = 0; j < orderModel.getRowCount(); j++) {
+                    if (orderModel.getValueAt(j, 0).equals(itemId)) {
+                        int currentQty = (int) orderModel.getValueAt(j, 3);
+                        int newQty = currentQty + quantity;
+                        if (newQty <= stockQty) {
+                            double newTotal = price * newQty;
+                            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+                            orderModel.setValueAt(newQty, j, 3);
+                            orderModel.setValueAt(currencyFormat.format(newTotal), j, 4);
+                            itemInCart = true;
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Insufficient stock for item: " + itemName);
+                            return;
+                        }
+                        break;
+                    }
                 }
+
+                if (!itemInCart) {
+                    double total = price * quantity;
+                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+                    orderModel.addRow(new Object[]{itemId, itemName, currencyFormat.format(price), quantity, currencyFormat.format(total)});
+                }
+
+                itemFound = true;
+                break;
+            } else {
+                JOptionPane.showMessageDialog(this, "Insufficient stock for item: " + itemName);
+                return;
             }
         }
-
-        if (!itemFound) {
-            JOptionPane.showMessageDialog(this, "Item not found in stock.");
-        }
-
-        updateTotal();
     }
+
+    if (!itemFound) {
+        JOptionPane.showMessageDialog(this, "Item not found in stock.");
+    }
+
+    updateTotal();
+    checkoutButton.setEnabled(orderTable.getRowCount() > 0); // Enable checkout button if there are items
+}
 
     private void updateTotal() {
         DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
         double total = 0;
 
         for (int i = 0; i < orderModel.getRowCount(); i++) {
-            total += (double) orderModel.getValueAt(i, 4);
+            String totalString = orderModel.getValueAt(i, 4).toString();
+            total += Double.parseDouble(totalString.replaceAll("[^\\d.]", ""));
         }
 
-        totalField.setText(String.valueOf(total));
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        totalField.setText(currencyFormat.format(total));
+        checkoutButton.setEnabled(orderModel.getRowCount() > 0); // Enable checkout button if there are items
     }
 
     private void checkoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        String paymentMethod = (String) paymentMethodComboBox.getSelectedItem();
-        double total = Double.parseDouble(totalField.getText());
+    if (orderTable.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(this, "No items in the order.");
+        return;
+    }
 
-        // Update stock quantities
-        DefaultTableModel stockModel = (DefaultTableModel) stockTable.getModel();
-        DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
+    String paymentMethod = (String) paymentMethodComboBox.getSelectedItem();
+    String totalText = totalField.getText();
+    double total = Double.parseDouble(totalText.replaceAll("[^\\d.]", ""));
 
-        for (int i = 0; i < orderModel.getRowCount(); i++) {
-            String itemId = (String) orderModel.getValueAt(i, 0);
-            int quantity = (int) orderModel.getValueAt(i, 3);
+    // Update stock quantities
+    DefaultTableModel stockModel = (DefaultTableModel) stockTable.getModel();
+    DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
 
-            for (int j = 0; j < stockModel.getRowCount(); j++) {
-                if (stockModel.getValueAt(j, 1).equals(itemId)) {
-                    int stockQty = Integer.parseInt((String) stockModel.getValueAt(j, 3));
-                    stockModel.setValueAt(String.valueOf(stockQty - quantity), j, 3);
-                    break;
-                }
+    for (int i = 0; i < orderModel.getRowCount(); i++) {
+        String itemId = (String) orderModel.getValueAt(i, 0);
+        int quantity = (int) orderModel.getValueAt(i, 3);
+
+        for (int j = 0; j < stockModel.getRowCount(); j++) {
+            if (stockModel.getValueAt(j, 1).equals(itemId)) {
+                int stockQty = Integer.parseInt(stockModel.getValueAt(j, 3).toString());
+                stockModel.setValueAt(String.valueOf(stockQty - quantity), j, 3);
+                break;
             }
         }
-
-        // Print receipt
-        printReceipt(orderModel, total, paymentMethod);
-
-        // Clear order table
-        orderModel.setRowCount(0);
-        totalField.setText("");
     }
+
+    // Print receipt
+    printReceipt(orderModel, total, paymentMethod);
+
+    // Clear order table
+    orderModel.setRowCount(0);
+    totalField.setText("");
+    checkoutButton.setEnabled(false); // Disable checkout button after clearing the order table
+}
 
     private void printReceipt(DefaultTableModel orderModel, double total, String paymentMethod) {
         StringBuilder receipt = new StringBuilder();
@@ -627,11 +790,18 @@ public class mainmenu extends javax.swing.JFrame {
         }
 
         receipt.append("====================================\n");
-        receipt.append("Total: ").append(total).append("\n");
+        receipt.append("Total: ").append(NumberFormat.getCurrencyInstance(new Locale("id", "ID")).format(total)).append("\n");
         receipt.append("Payment Method: ").append(paymentMethod).append("\n");
         receipt.append("Payment Successful\n");
 
         JOptionPane.showMessageDialog(this, receipt.toString());
+    }
+
+    private void clearStockFields() {
+        nameField.setText("");
+        idField.setText("");
+        priceField.setText("");
+        qtyField.setText("");
     }
 
     /**
@@ -698,5 +868,6 @@ public class mainmenu extends javax.swing.JFrame {
     private javax.swing.JPanel stockPanel;
     private javax.swing.JTable stockTable;
     private javax.swing.JButton updateButton;
+    
     // End of variables declaration//GEN-END:variables
 }
