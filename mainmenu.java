@@ -28,7 +28,8 @@ public class mainmenu extends javax.swing.JFrame {
     private javax.swing.JLabel itemIdLabel;
     private javax.swing.JLabel itemQtyLabel;
     private javax.swing.JButton deleteItemButton;
-private javax.swing.JButton updateItemButton;
+    private javax.swing.JTable logTable;
+    private javax.swing.JScrollPane logScrollPane;
  
     /**
      * Creates new form mainmenu
@@ -108,12 +109,20 @@ private javax.swing.JButton updateItemButton;
         itemIdLabel = new javax.swing.JLabel();
         itemQtyLabel = new javax.swing.JLabel();
         deleteItemButton = new javax.swing.JButton();
-        updateItemButton = new javax.swing.JButton();
+        deleteItemButton = new javax.swing.JButton();
+
+        deleteItemButton.setText("Delete Item");
+        deleteItemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteItemButtonActionPerformed(evt);
+            }
+        });
 
         itemIdField.setText("Item ID");
         itemQtyField.setText("Quantity");
 
         addItemButton.setText("Add Item");
+        deleteItemButton.setText("Delete Item");
         addItemButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addItemButtonActionPerformed(evt);
@@ -144,8 +153,7 @@ private javax.swing.JButton updateItemButton;
         itemIdErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
         itemQtyErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
 
-        itemIdLabel.setText("Item ID:");
-        itemQtyLabel.setText("Quantity:");
+      
 
         
 
@@ -169,6 +177,8 @@ cashierPanelLayout.setHorizontalGroup(
                     .addComponent(itemQtyErrorLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addItemButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteItemButton)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cashierPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -194,7 +204,8 @@ cashierPanelLayout.setVerticalGroup(
         .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
             .addComponent(itemIdField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(itemQtyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(addItemButton))
+            .addComponent(addItemButton)
+            .addComponent(deleteItemButton))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(cashierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
             .addComponent(itemIdErrorLabel)
@@ -264,102 +275,107 @@ cashierPanelLayout.setVerticalGroup(
 
         jLabel1.setText("Item Name");
         jLabel6.setText("ID");
-        jLabel7.setText("Price");
+        jLabel7.setText("Price (USD)");
         jLabel8.setText("QTY");
 
         javax.swing.GroupLayout stockPanelLayout = new javax.swing.GroupLayout(stockPanel);
-        stockPanel.setLayout(stockPanelLayout);
-        stockPanelLayout.setHorizontalGroup(
-            stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+stockPanel.setLayout(stockPanelLayout);
+stockPanelLayout.setHorizontalGroup(
+    stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(stockPanelLayout.createSequentialGroup()
+        .addGap(15, 15, 15)
+        .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
             .addGroup(stockPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(stockPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(stockPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 979, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(qtyField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stockPanelLayout.createSequentialGroup()
-                        .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(stockPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(qtyField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stockPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stockPanelLayout.createSequentialGroup()
-                                .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel6))
-                                .addGap(21, 21, 21)
-                                .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stockPanelLayout.createSequentialGroup()
-                        .addComponent(addButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(updateButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(deleteButton)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        stockPanelLayout.setVerticalGroup(
-            stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(stockPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(qtyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
-                    .addComponent(updateButton)
-                    .addComponent(deleteButton)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
-        ));
+                        .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel6))
+                        .addGap(21, 21, 21)
+                        .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, stockPanelLayout.createSequentialGroup()
+                .addComponent(addButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(updateButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(deleteButton)
+                .addGap(0, 0, Short.MAX_VALUE)))
+        .addContainerGap())
+    .addGroup(stockPanelLayout.createSequentialGroup()
+        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 980, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(0, 0, Short.MAX_VALUE))
+);
+stockPanelLayout.setVerticalGroup(
+    stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(stockPanelLayout.createSequentialGroup()
+        .addGap(15, 15, 15)
+        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(jLabel1)
+            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(9, 9, 9)
+        .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel6)
+            .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel7)
+            .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(jLabel8)
+            .addComponent(qtyField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+        .addGroup(stockPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(addButton)
+            .addComponent(updateButton)
+            .addComponent(deleteButton))
+        .addGap(18, 18, 18)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(19, 19, 19))
+);
 
         parentPanel.add(stockPanel, "card3");
 
-        logPanel.setBackground(new java.awt.Color(255, 255, 255));
+        logPanel = new javax.swing.JPanel();
+        logTable = new javax.swing.JTable();
+        logScrollPane = new javax.swing.JScrollPane();
 
-        jLabel5.setFont(new java.awt.Font("Futura Hv BT", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(19, 62, 135));
-        jLabel5.setText("Log Transaction");
+        logTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {"Item ID", "Item Name", "Quantity"}
+        ));
+        logTable.getTableHeader().setReorderingAllowed(false); // Disable column reordering
+        logScrollPane.setViewportView(logTable);
 
         javax.swing.GroupLayout logPanelLayout = new javax.swing.GroupLayout(logPanel);
         logPanel.setLayout(logPanelLayout);
         logPanelLayout.setHorizontalGroup(
             logPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(logPanelLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                .addGap(894, 894, 894))
+                .addContainerGap()
+                .addComponent(logScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 980, Short.MAX_VALUE)
+                .addContainerGap())
         );
         logPanelLayout.setVerticalGroup(
             logPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(logPanelLayout.createSequentialGroup()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 483, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(logScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         parentPanel.add(logPanel, "card2");
@@ -553,11 +569,11 @@ cashierPanelLayout.setVerticalGroup(
     }
 
     // Validate price
-    int price;
+    double price;
     try {
-        price = Integer.parseInt(priceText);
+        price = Double.parseDouble(priceText);
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Price must be a whole number.");
+        JOptionPane.showMessageDialog(this, "Price must be a number.");
         return;
     }
 
@@ -570,7 +586,7 @@ cashierPanelLayout.setVerticalGroup(
         return;
     }
 
-    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
     String formattedPrice = currencyFormat.format(price);
 
     DefaultTableModel stockModel = (DefaultTableModel) stockTable.getModel();
@@ -603,11 +619,11 @@ private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
         }
 
         // Validate price
-        int price;
+        double price;
         try {
-            price = Integer.parseInt(priceText);
+            price = Double.parseDouble(priceText);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Price must be a whole number.");
+            JOptionPane.showMessageDialog(this, "Price must be a number.");
             return;
         }
 
@@ -620,7 +636,7 @@ private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
             return;
         }
 
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
         String formattedPrice = currencyFormat.format(price);
 
         DefaultTableModel stockModel = (DefaultTableModel) stockTable.getModel();
@@ -668,6 +684,10 @@ private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
     int quantity;
     try {
         quantity = Integer.parseInt(quantityText);
+        if (quantity <= 0) {
+            itemQtyErrorLabel.setText("Quantity must be greater than zero");
+            return;
+        }
     } catch (NumberFormatException e) {
         itemQtyErrorLabel.setText("Invalid quantity");
         return;
@@ -681,7 +701,14 @@ private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
     for (int i = 0; i < stockModel.getRowCount(); i++) {
         if (stockModel.getValueAt(i, 1).equals(itemId)) {
             String itemName = (String) stockModel.getValueAt(i, 0);
-            double price = Double.parseDouble(stockModel.getValueAt(i, 2).toString().replaceAll("[^\\d.]", ""));
+            double price = 0;
+            try {
+                price = NumberFormat.getCurrencyInstance(Locale.US).parse(stockModel.getValueAt(i, 2).toString()).doubleValue();
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error parsing price.");
+                return;
+            }
             int stockQty = Integer.parseInt(stockModel.getValueAt(i, 3).toString());
 
             if (quantity <= stockQty) {
@@ -693,7 +720,7 @@ private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
                         int newQty = currentQty + quantity;
                         if (newQty <= stockQty) {
                             double newTotal = price * newQty;
-                            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+                            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
                             orderModel.setValueAt(newQty, j, 3);
                             orderModel.setValueAt(currencyFormat.format(newTotal), j, 4);
                             itemInCart = true;
@@ -707,7 +734,7 @@ private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
 
                 if (!itemInCart) {
                     double total = price * quantity;
-                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
                     orderModel.addRow(new Object[]{itemId, itemName, currencyFormat.format(price), quantity, currencyFormat.format(total)});
                 }
 
@@ -728,21 +755,21 @@ private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
     checkoutButton.setEnabled(orderTable.getRowCount() > 0); // Enable checkout button if there are items
 }
 
-    private void updateTotal() {
-        DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
-        double total = 0;
+private void updateTotal() {
+    DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
+    double total = 0;
 
-        for (int i = 0; i < orderModel.getRowCount(); i++) {
-            String totalString = orderModel.getValueAt(i, 4).toString();
-            total += Double.parseDouble(totalString.replaceAll("[^\\d.]", ""));
-        }
-
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
-        totalField.setText(currencyFormat.format(total));
-        checkoutButton.setEnabled(orderModel.getRowCount() > 0); // Enable checkout button if there are items
+    for (int i = 0; i < orderModel.getRowCount(); i++) {
+        String totalString = orderModel.getValueAt(i, 4).toString();
+        total += Double.parseDouble(totalString.replaceAll("[^\\d.]", ""));
     }
 
-    private void checkoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
+    totalField.setText(currencyFormat.format(total));
+    checkoutButton.setEnabled(orderModel.getRowCount() > 0);
+}
+
+private void checkoutButtonActionPerformed(java.awt.event.ActionEvent evt) {
     if (orderTable.getRowCount() == 0) {
         JOptionPane.showMessageDialog(this, "No items in the order.");
         return;
@@ -752,13 +779,49 @@ private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
     String totalText = totalField.getText();
     double total = Double.parseDouble(totalText.replaceAll("[^\\d.]", ""));
 
+    double cash = 0;
+    if (paymentMethod.equals("Cash")) {
+        String cashText = JOptionPane.showInputDialog(this, "Enter cash amount:");
+        if (cashText == null || cashText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Cash amount is required.");
+            return;
+        }
+        try {
+            cash = Double.parseDouble(cashText);
+            if (cash < total) {
+                JOptionPane.showMessageDialog(this, "Cash must be greater than or equal to the total.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid cash amount.");
+            return;
+        }
+    }
+
     // Update stock quantities
     DefaultTableModel stockModel = (DefaultTableModel) stockTable.getModel();
     DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
+    DefaultTableModel logModel = (DefaultTableModel) logTable.getModel();
 
     for (int i = 0; i < orderModel.getRowCount(); i++) {
         String itemId = (String) orderModel.getValueAt(i, 0);
+        String itemName = (String) orderModel.getValueAt(i, 1);
         int quantity = (int) orderModel.getValueAt(i, 3);
+
+        // Combine items in the log table
+        boolean itemInLog = false;
+        for (int j = 0; j < logModel.getRowCount(); j++) {
+            if (logModel.getValueAt(j, 0).equals(itemId)) {
+                int currentQty = (int) logModel.getValueAt(j, 2);
+                logModel.setValueAt(currentQty + quantity, j, 2);
+                itemInLog = true;
+                break;
+            }
+        }
+
+        if (!itemInLog) {
+            logModel.addRow(new Object[]{itemId, itemName, quantity});
+        }
 
         for (int j = 0; j < stockModel.getRowCount(); j++) {
             if (stockModel.getValueAt(j, 1).equals(itemId)) {
@@ -770,7 +833,8 @@ private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
     }
 
     // Print receipt
-    printReceipt(orderModel, total, paymentMethod);
+    double change = cash - total;
+    printReceipt(orderModel, total, paymentMethod, change, cash);
 
     // Clear order table
     orderModel.setRowCount(0);
@@ -778,31 +842,50 @@ private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
     checkoutButton.setEnabled(false); // Disable checkout button after clearing the order table
 }
 
-    private void printReceipt(DefaultTableModel orderModel, double total, String paymentMethod) {
-        StringBuilder receipt = new StringBuilder();
-        receipt.append("Receipt\n");
-        receipt.append("====================================\n");
+private void printReceipt(DefaultTableModel orderModel, double total, String paymentMethod, double change, double cash) {
+    StringBuilder receipt = new StringBuilder();
+    receipt.append("Receipt\n");
+    receipt.append("====================================\n");
+    receipt.append(String.format("%-20s %10s %15s\n", "Item Name", "Qty", "Total"));
+    receipt.append("====================================\n");
 
-        for (int i = 0; i < orderModel.getRowCount(); i++) {
-            receipt.append(orderModel.getValueAt(i, 1)).append("\t")
-                   .append(orderModel.getValueAt(i, 3)).append("\t")
-                   .append(orderModel.getValueAt(i, 4)).append("\n");
-        }
-
-        receipt.append("====================================\n");
-        receipt.append("Total: ").append(NumberFormat.getCurrencyInstance(new Locale("id", "ID")).format(total)).append("\n");
-        receipt.append("Payment Method: ").append(paymentMethod).append("\n");
-        receipt.append("Payment Successful\n");
-
-        JOptionPane.showMessageDialog(this, receipt.toString());
+    for (int i = 0; i < orderModel.getRowCount(); i++) {
+        String itemName = (String) orderModel.getValueAt(i, 1);
+        int quantity = (int) orderModel.getValueAt(i, 3);
+        String totalString = (String) orderModel.getValueAt(i, 4);
+        receipt.append(String.format("%-20s %10d %15s\n", itemName, quantity, totalString));
     }
 
-    private void clearStockFields() {
-        nameField.setText("");
-        idField.setText("");
-        priceField.setText("");
-        qtyField.setText("");
+    receipt.append("====================================\n");
+    receipt.append(String.format("%-20s %25s\n", "Total:", NumberFormat.getCurrencyInstance(Locale.US).format(total)));
+    receipt.append(String.format("%-20s %25s\n", "Payment Method:", paymentMethod));
+    if (paymentMethod.equals("Cash")) {
+        receipt.append(String.format("%-20s %25s\n", "Cash:", NumberFormat.getCurrencyInstance(Locale.US).format(cash)));
+        receipt.append(String.format("%-20s %25s\n", "Change:", NumberFormat.getCurrencyInstance(Locale.US).format(change)));
     }
+    receipt.append("Payment Successful\n");
+
+    JOptionPane.showMessageDialog(this, receipt.toString());
+}
+
+private void clearStockFields() {
+    nameField.setText("");
+    idField.setText("");
+    priceField.setText("");
+    qtyField.setText("");
+}
+
+private void deleteItemButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    int selectedRow = orderTable.getSelectedRow();
+    if (selectedRow != -1) {
+        DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
+        orderModel.removeRow(selectedRow);
+        updateTotal();
+        checkoutButton.setEnabled(orderTable.getRowCount() > 0); // Enable checkout button if there are items
+    } else {
+        JOptionPane.showMessageDialog(this, "Select a row to delete.");
+    }
+}
 
     /**
      * @param args the command line arguments

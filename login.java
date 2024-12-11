@@ -160,14 +160,14 @@ public class login extends javax.swing.JFrame {
 
         
         if(inputUsername.equals(username) && inputPassword.equals(password)) {
-            JOptionPane.showMessageDialog(this, "Selamat datang di mesin kasir!");
+            JOptionPane.showMessageDialog(this, "Welcome to Gardiono Cashier!");
             
             mainmenu mainMenu = new mainmenu(); 
             mainMenu.setVisible(true);                
             this.dispose();   
             
         } else {
-            JOptionPane.showMessageDialog(this, "Username atau password salah", "Login Gagal", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Username or password incorrect", "Login failed", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
